@@ -99,31 +99,31 @@ namespace NYCTaxiTrips.Data
                                     tolls_amount,
                                     imp_surcharge,
                                     total_amount
-                            FROM `[FULL_TABLE_NAME]`
-                            WHERE {strType}_longitude > {startLongitude} AND 
-                                  {strType}_longitude <= {startLongitude + longitudeOffset} AND 
-                                  {strType}_latitude > {startLatitude} AND 
-                                  {strType}_latitude <= {startLatitude + latitudeOffset}";
+                            FROM    [FULL_TABLE_NAME]
+                            WHERE   {strType}_longitude > {startLongitude} AND 
+                                    {strType}_longitude <= {startLongitude + longitudeOffset} AND 
+                                    {strType}_latitude > {startLatitude} AND 
+                                    {strType}_latitude <= {startLatitude + latitudeOffset}";
             
             var result = await _repository.GetData(query);
-            return await Task.FromResult(result.Select(row => new TaxiTrip{vendor_id = (int)row["vendor_id"],
-                                                                           pickup_datetime = DateTime.ParseExact(row["pickup_datetime"].ToString(),"yyyy-MM-dd'T'HH:mm:ss",CultureInfo.InvariantCulture),
-                                                                           dropoff_datetime = DateTime.ParseExact(row["dropoff_datetime"].ToString(),"yyyy-MM-dd'T'HH:mm:ss",CultureInfo.InvariantCulture), 
-                                                                           passenger_count = (int)row["passenger_count"],
-                                                                           trip_distance = (decimal)row["trip_distance"],
-                                                                           pickup_longitude = (double)row["pickup_longitude"],
+            return await Task.FromResult(result.Select(row => new TaxiTrip{vendor_id = (string)row["vendor_id"],
+                                                                           pickup_datetime = DateTime.ParseExact(row["pickup_datetime"].ToString(),"M/dd/yyyy h:mm:ss tt",CultureInfo.InvariantCulture),
+                                                                           dropoff_datetime = DateTime.ParseExact(row["dropoff_datetime"].ToString(),"M/dd/yyyy h:mm:ss tt",CultureInfo.InvariantCulture), 
+                                                                           passenger_count = (int)(long)row["passenger_count"],
+                                                                           trip_distance = (decimal)(double)row["trip_distance"],
+                                                                           pickup_longitude = (double)(double)row["pickup_longitude"],
                                                                            pickup_latitude = (double)row["pickup_latitude"],
-                                                                           rate_code = (int?)row["rate_code"],
+                                                                           rate_code = row["rate_code"] != null?(int?)(long)row["rate_code"]:null,
                                                                            dropoff_longitude = (double)row["dropoff_longitude"],
                                                                            dropoff_latitude = (double)row["dropoff_latitude"],
-                                                                           payment_type = (int)row["payment_type"],
-                                                                           fare_amount = (decimal)row["fare_amount"],
-                                                                           extra = (decimal)row["extra"],
-                                                                           mta_tax = (decimal)row["mta_tax"],
-                                                                           tip_amount = (decimal)row["tip_amount"],
-                                                                           tolls_amount = (decimal)row["tip_amount"],
-                                                                           imp_surcharge = (decimal)row["imp_surcharge"],
-                                                                           total_amount = (decimal)row["total_amount"]
+                                                                           payment_type = (string)row["payment_type"],
+                                                                           fare_amount = (decimal)(double)row["fare_amount"],
+                                                                           extra = (decimal)(double)row["extra"],
+                                                                           mta_tax = (decimal)(double)row["mta_tax"],
+                                                                           tip_amount = (decimal)(double)row["tip_amount"],
+                                                                           tolls_amount = (decimal)(double)row["tip_amount"],
+                                                                           imp_surcharge = (decimal)(double)row["imp_surcharge"],
+                                                                           total_amount = (decimal)(double)row["total_amount"]
                                                                            }));
         }
     }

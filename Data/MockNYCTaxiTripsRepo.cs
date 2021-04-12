@@ -10,7 +10,7 @@ namespace NYCTaxiTrips.Data
     public class MockNYCTaxiTripsRepo : INYCTaxiTripsRepo
     {
         private int _grid;
-        private IEnumerable<TaxiTrip> _mockTaxiTrips = new TaxiTrip[] {new TaxiTrip{vendor_id = 2,
+        private IEnumerable<TaxiTrip> _mockTaxiTrips = new TaxiTrip[] {new TaxiTrip{vendor_id = "2",
                                                                      pickup_datetime = DateTime.ParseExact("2015-10-19T14:42:59","yyyy-MM-dd'T'HH:mm:ss",CultureInfo.InvariantCulture),
                                                                      dropoff_datetime = DateTime.ParseExact("2015-10-19T14:47:06","yyyy-MM-dd'T'HH:mm:ss",CultureInfo.InvariantCulture),
                                                                      passenger_count = 2,
@@ -20,7 +20,7 @@ namespace NYCTaxiTrips.Data
                                                                      rate_code = 1,
                                                                      dropoff_longitude = -73.962371826171875,
                                                                      dropoff_latitude = 40.773128509521484,
-                                                                     payment_type = 2,
+                                                                     payment_type = "2",
                                                                      fare_amount = 5.0M,
                                                                      extra = 0.0M,
                                                                      mta_tax = 0.5M,
@@ -29,7 +29,7 @@ namespace NYCTaxiTrips.Data
                                                                      imp_surcharge = 0.3M,
                                                                      total_amount = 5.8M
                                                                     },
-                                                        new TaxiTrip{vendor_id = 1,
+                                                        new TaxiTrip{vendor_id = "1",
                                                                      pickup_datetime = DateTime.ParseExact("2015-11-24T12:28:25","yyyy-MM-dd'T'HH:mm:ss",CultureInfo.InvariantCulture),
                                                                      dropoff_datetime = DateTime.ParseExact("2015-11-24T12:37:33","yyyy-MM-dd'T'HH:mm:ss",CultureInfo.InvariantCulture),
                                                                      passenger_count = 1,
@@ -39,7 +39,7 @@ namespace NYCTaxiTrips.Data
                                                                      rate_code = 1,
                                                                      dropoff_longitude = -73.9911117553711,
                                                                      dropoff_latitude = 40.748569488525391,
-                                                                     payment_type = 1,
+                                                                     payment_type = "1",
                                                                      fare_amount = 7.0M,
                                                                      extra = 0.0M,
                                                                      mta_tax = 0.5M,
@@ -48,7 +48,7 @@ namespace NYCTaxiTrips.Data
                                                                      imp_surcharge = 0.3M,
                                                                      total_amount = 9.35M
                                                                     },
-                                                        new TaxiTrip{vendor_id = 1,
+                                                        new TaxiTrip{vendor_id = "1",
                                                                      pickup_datetime = DateTime.ParseExact("2015-11-21T20:21:37","yyyy-MM-dd'T'HH:mm:ss",CultureInfo.InvariantCulture),
                                                                      dropoff_datetime = DateTime.ParseExact("2015-11-21T20:44:19","yyyy-MM-dd'T'HH:mm:ss",CultureInfo.InvariantCulture),
                                                                      passenger_count = 1,
@@ -58,7 +58,7 @@ namespace NYCTaxiTrips.Data
                                                                      rate_code = 1,
                                                                      dropoff_longitude = -74.0,
                                                                      dropoff_latitude = 40.730560302734375,
-                                                                     payment_type = 2,
+                                                                     payment_type = "2",
                                                                      fare_amount = 15.0M,
                                                                      extra = 0.0M,
                                                                      mta_tax = 0.5M,

@@ -3,7 +3,7 @@ namespace NYCTaxiTrips.Models
 {
     public class TaxiTrip
     {
-        public int vendor_id { get; set;}
+        public string vendor_id { get; set;}
         public DateTime pickup_datetime {get; set;}
         public DateTime dropoff_datetime {get; set;}
         public  int passenger_count {get; set;}
@@ -13,7 +13,7 @@ namespace NYCTaxiTrips.Models
         public int? rate_code {get; set;}
         public double dropoff_longitude {get; set;}
         public double dropoff_latitude {get; set;}
-        public int payment_type {get; set;}
+        public string payment_type {get; set;}
         public decimal fare_amount {get; set;}
         public decimal extra {get; set;}
         public decimal mta_tax {get; set;}
