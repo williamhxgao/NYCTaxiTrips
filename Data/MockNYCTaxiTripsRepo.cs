@@ -72,20 +72,20 @@ namespace NYCTaxiTrips.Data
         {
             _grid = grid;
         }
-        public async Task<IEnumerable<TaxiTripGroup>> GetTaxiTripGroups(double startLongitude, double startLatitude, double longitudeOffset, double latitudeOffset, TripType tripType)
+        public async Task<IEnumerable<TaxiTripGroup>> GetTaxiTripGroups(double startLng, double startLat, double lngOffset, double latOffset, TripType tripType, DateTime? startDate = null, DateTime? endDate = null)
         {
             IEnumerable<double[]> ranges = new List<double[]>(); 
             
             for(int i = 0; i < _grid; i++)
                 for(int j = 0; j < _grid; j++)
-                    ranges.Append(new double[]{startLongitude + longitudeOffset / _grid * (i + 1), startLatitude + latitudeOffset / _grid * (j + 1)});
+                    ranges.Append(new double[]{startLng + lngOffset / _grid * (i + 1), startLat + latOffset / _grid * (j + 1)});
 
             if(tripType == TripType.PickUp)
             {
-               return await Task.FromResult(_mockTaxiTrips.Where(t=>t.pickup_longitude > startLongitude && 
-                                                                  t.pickup_longitude <= startLongitude + longitudeOffset &&
-                                                                  t.pickup_latitude > startLatitude &&
-                                                                  t.pickup_latitude <= startLatitude + latitudeOffset)
+               return await Task.FromResult(_mockTaxiTrips.Where(t=>t.pickup_longitude > startLng && 
+                                                                  t.pickup_longitude <= startLng + lngOffset &&
+                                                                  t.pickup_latitude > startLat &&
+                                                                  t.pickup_latitude <= startLat + latOffset)
                                                             .GroupBy(g=> ranges.FirstOrDefault(r=>r[0] > g.pickup_longitude && r[1] > g.pickup_latitude))
                                                             .Select(g=> new TaxiTripGroup{trips = g.Count(),
                                                                                             average_distance = g.Average(t=>t.trip_distance),
@@ -98,10 +98,10 @@ namespace NYCTaxiTrips.Data
             }
             else
             {
-                return await Task.FromResult(_mockTaxiTrips.Where(t=>t.dropoff_longitude > startLongitude && 
-                                                                     t.dropoff_longitude <= startLongitude + longitudeOffset &&
-                                                                     t.dropoff_latitude > startLatitude &&
-                                                                     t.dropoff_latitude <= startLatitude + latitudeOffset)
+                return await Task.FromResult(_mockTaxiTrips.Where(t=>t.dropoff_longitude > startLng && 
+                                                                     t.dropoff_longitude <= startLng + lngOffset &&
+                                                                     t.dropoff_latitude > startLat &&
+                                                                     t.dropoff_latitude <= startLat + latOffset)
                                                             .GroupBy(g=> ranges.FirstOrDefault(r=>r[0] > g.dropoff_longitude && r[1] > g.dropoff_latitude))
                                                             .Select(g=> new TaxiTripGroup{trips = g.Count(),
                                                                                             average_distance = g.Average(t=>t.trip_distance),
@@ -114,20 +114,18 @@ namespace NYCTaxiTrips.Data
             }
         }
 
-            
-
-        public async Task<IEnumerable<TaxiTrip>> GetTaxiTrips(double startLongitude, double startLatitude, double longitudeOffset, double latitudeOffset, TripType tripType)
+        public async Task<IEnumerable<TaxiTrip>> GetTaxiTrips(double startLng, double startLat, double lngOffset, double latOffset, TripType tripType, DateTime? startDate = null, DateTime? endDate = null)
         {
             if(tripType == TripType.PickUp)
-                return await Task.FromResult(_mockTaxiTrips.Where(t=>t.pickup_longitude > startLongitude && 
-                                                                  t.pickup_longitude <= startLongitude + longitudeOffset &&
-                                                                  t.pickup_latitude > startLatitude &&
-                                                                  t.pickup_latitude <= startLatitude + latitudeOffset));
+                return await Task.FromResult(_mockTaxiTrips.Where(t=>t.pickup_longitude > startLng && 
+                                                                  t.pickup_longitude <= startLng + lngOffset &&
+                                                                  t.pickup_latitude > startLat &&
+                                                                  t.pickup_latitude <= startLat + latOffset));
             else
-                return await Task.FromResult(_mockTaxiTrips.Where(t=>t.dropoff_longitude > startLongitude && 
-                                                                  t.dropoff_longitude <= startLongitude + longitudeOffset &&
-                                                                  t.dropoff_latitude > startLatitude &&
-                                                                  t.dropoff_latitude <= startLatitude + latitudeOffset));
+                return await Task.FromResult(_mockTaxiTrips.Where(t=>t.dropoff_longitude > startLng && 
+                                                                  t.dropoff_longitude <= startLng + lngOffset &&
+                                                                  t.dropoff_latitude > startLat &&
+                                                                  t.dropoff_latitude <= startLat + latOffset));
         }
     }
 }

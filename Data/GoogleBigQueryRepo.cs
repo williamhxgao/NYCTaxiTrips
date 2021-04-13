@@ -1,5 +1,6 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using Google.Cloud.BigQuery.V2;
 using Google.Apis.Auth.OAuth2;
@@ -12,13 +13,13 @@ namespace NYCTaxiTrips.Data
         private GoogleCredential _gcpCredential;
         private readonly string _tableName;
 
-        public GoogleBigQueryRepo(IWebHostEnvironment hostingEnvironment, string projectId, string credentialFile, string tableName)
+        public GoogleBigQueryRepo(IWebHostEnvironment hostingEnvironment, IOptions<GoogleServiceSettings> settings)
         {
-            _projectId = projectId;
-            var config = Path.Combine(hostingEnvironment.WebRootPath, credentialFile);
+            _projectId = settings.Value.ProjectId;
+            var config = Path.Combine(hostingEnvironment.WebRootPath, settings.Value.CrerdentialFile);
             using(var jsonStream = new FileStream(config, FileMode.Open,FileAccess.Read,FileShare.Read))
                 _gcpCredential = GoogleCredential.FromStream(jsonStream);
-            _tableName = tableName;
+            _tableName = settings.Value.QueryTable;
         }
 
         public async Task<BigQueryResults> GetData(string query)

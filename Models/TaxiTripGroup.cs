@@ -2,7 +2,7 @@ namespace NYCTaxiTrips.Models
 {
     public class TaxiTripGroup
     {
-        public string id{get; set;}
+        public int id{get; set;}
         public int trips {get; set;}
         public decimal average_passenger_count {get; set;}
         public decimal average_distance {get; set;}

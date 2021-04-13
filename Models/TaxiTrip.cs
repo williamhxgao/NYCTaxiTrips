@@ -3,6 +3,7 @@ namespace NYCTaxiTrips.Models
 {
     public class TaxiTrip
     {
+        public int id {get; set;}
         public string vendor_id { get; set;}
         public DateTime pickup_datetime {get; set;}
         public DateTime dropoff_datetime {get; set;}
